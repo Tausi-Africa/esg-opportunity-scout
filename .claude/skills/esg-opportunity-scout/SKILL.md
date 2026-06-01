@@ -35,7 +35,7 @@ team-cvs/apa-cvs.md · team-cvs/bsm-washauri.md · team-cvs/dentons-team.md  <- 
 
 To be added (flag as missing until present): `output/`.
 
-Read all files from the repository, never from a local disk. The link registry is **`links.md` at the repo root** (not `additional_urls.txt`); it also serves as the source registry — there is no separate `source_registry.md`. CEOrt has no dedicated profile file — describe it only from the MoU.
+Read all files from the repository, never from a local disk. **The repo is strictly read-only — never edit, write, commit, or push anything back to it.** The link registry is **`links.md` at the repo root** (not `additional_urls.txt`); it also serves as the source registry — there is no separate `source_registry.md`. CEOrt has no dedicated profile file — describe it only from the MoU. The only outbound actions a run takes are the delivery steps (Drive upload, Gmail email, optional Calendar reminders) — it never modifies the repository.
 
 ---
 
@@ -127,7 +127,7 @@ Maintain an audit trail: for every candidate, record the URL, the fetch result, 
 ## WHERE TO SEARCH — SOURCE UNIVERSE
 
 ### Priority 1 — `links.md` (master registry + source registry)
-Search every link in the repo-root `links.md` registry before any default source below. Keep `links.md` updated as sources move or die — it is the single source registry.
+Search every link in the repo-root `links.md` registry before any default source below. `links.md` is the single source registry. **Treat the repo as read-only — never edit, write, commit, or push any file back to it.** If a source has moved or died, note it in `<search_summary>`; do not modify `links.md`.
 
 ### 1. Multilateral & Vertical Climate Funds
 - Green Climate Fund — **greenclimate.fund** (procurement, RFPs, accreditation, PPF, readiness)
@@ -245,7 +245,7 @@ Search every link in the repo-root `links.md` registry before any default source
 - 3ie — **3ieimpact.org** ; J-PAL Africa — **povertyactionlab.org** ; IPA — **poverty-action.org**
 - CIFOR-ICRAF — **cifor-icraf.org** ; AGRA — **agra.org** ; CGIAR — **cgiar.org**
 
-> **Source-registry discipline:** whenever a source's reachability changes (newly blocked, moved, or dead), update its entry in `links.md` with the date and status so future runs start from accurate ground truth. `links.md` is the single source registry.
+> **Source-registry discipline:** whenever a source's reachability changes (newly blocked, moved, or dead), record it in `<search_summary>` with the date and status. **Do not edit `links.md` or any repo file — the repo is read-only.** Status changes live in the run's report, not in the repository.
 
 ---
 
@@ -519,7 +519,7 @@ If the **Google Calendar connector** is available, create a reminder 7 days befo
 - **`web_fetch` every URL before inclusion.** No fetch, no entry.
 - Read all consortium files at the start of every run.
 - Search all 13 source categories across all 3 regions every run — postings change weekly.
-- If a source is inaccessible, note it, try an alternative, and update its status in `links.md`.
+- If a source is inaccessible, note it in `<search_summary>` and try an alternative. **Never write to the repo** — record status in the report, not in `links.md`.
 - Prioritize confirmed deadlines within 30 days.
 - Always attempt Google Drive upload before sending the email.
 - Email subject is a single plain-text line; body dynamic text is HTML-escaped; the "This is a weekly automated email" line is always present.
