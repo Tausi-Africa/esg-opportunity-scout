@@ -7,7 +7,7 @@ description: Runs a full ESG, climate-finance, and green-finance opportunity sca
 
 ## What this skill does
 
-Runs a weekly ESG / climate-finance / green-finance opportunity scan on behalf of the consortium of **AfroPavo Analytics Ltd**, **BSM Washauri (TZ) Ltd**, and **Dentons EALC** (with **CEOrt Tanzania** as institutional partner).
+Runs a weekly ESG / climate-finance / green-finance opportunity scan on behalf of the consortium of **AfroPavo Analytics Ltd**, **BSM Washauri (TZ) Ltd**, and **Dentons EALC**.
 
 Each run: reads consortium knowledge files → searches 13 source categories with targeted keywords across **three regions** → collects candidates → **verifies every candidate against a live fetched page (`web_fetch`)** → scores consortium relevance and assigns a lead partner → compiles a 22-column CSV → **uploads it to Google Drive** → **sends a formatted HTML email via Gmail** (CSV attached, Drive link in body) → **optionally creates Google Calendar deadline reminders**.
 
@@ -35,7 +35,7 @@ team-cvs/apa-cvs.md · team-cvs/bsm-washauri.md · team-cvs/dentons-team.md  <- 
 
 To be added (flag as missing until present): `output/`.
 
-Read all files from the repository, never from a local disk. **The repo is strictly read-only — never edit, write, commit, or push anything back to it.** The link registry is **`links.md` at the repo root** (not `additional_urls.txt`); it also serves as the source registry — there is no separate `source_registry.md`. CEOrt has no dedicated profile file — describe it only from the MoU. The only outbound actions a run takes are the delivery steps (Drive upload, Gmail email, optional Calendar reminders) — it never modifies the repository.
+Read all files from the repository, never from a local disk. **The repo is strictly read-only — never edit, write, commit, or push anything back to it.** The link registry is **`links.md` at the repo root** (not `additional_urls.txt`); it also serves as the source registry — there is no separate `source_registry.md`. The only outbound actions a run takes are the delivery steps (Drive upload, Gmail email, optional Calendar reminders) — it never modifies the repository.
 
 ---
 
@@ -49,8 +49,6 @@ Read all consortium knowledge files before searching:
 4. `knowledge-base/company-profiles/dentons-ealc-profile.md` — legal, regulatory, fiduciary, ESG-compliance, GCF structuring
 5. `team-cvs/apa-cvs.md`, `team-cvs/bsm-washauri.md`, `team-cvs/dentons-team.md` — named experts/qualifications (match against opportunity criteria)
 6. `links.md` — **master verified link registry + source registry; Priority-1 source list** (also tracks source reachability/status)
-
-CEOrt has no dedicated profile file — describe it only from the MoU, which names it as the knowledge-hub/training institutional partner.
 
 At the top of every response, confirm each file was read or flag it missing. Do not begin searching until the files are read. **Never invent the contents of a missing file.**
 
@@ -112,7 +110,6 @@ Maintain an audit trail: for every candidate, record the URL, the fetch result, 
 | **AfroPavo Analytics** | Technical: climate-finance instruments, green-finance structuring, data/AI/ML, applied research, impact metrics, MEL design | Technical assistance, feasibility studies, data & analytics, MRV/MEL, financial-inclusion + climate |
 | **BSM Washauri (TZ)** | Strategy, governance, policy, institutional development, stakeholder engagement, proposal structuring, training delivery | Advisory, policy/strategy, institutional strengthening, programme design, communications |
 | **Dentons EALC** | Legal, regulatory, fiduciary, ESG-compliance frameworks, GCF transaction structuring, funding-agreement review | Legal/regulatory advisory, ESG-compliance, fiduciary/accreditation support, transaction legal work |
-| **CEOrt Tanzania** *(institutional)* | Knowledge hubs, learning platforms, ESG/sustainability/climate-finance training | Capacity-building, curriculum, post-training follow-up, knowledge dissemination |
 
 **Geography:**
 - **Tanzania** (headquarters — search every run)
@@ -290,7 +287,7 @@ Extract each field **only** from the fetched page/PDF. Write `Not Found` / `Not 
 | 15 | `Estimated_Value` | Amount + currency if stated — else `Not Stated` |
 | 16 | `Qualification_Criteria` | Only criteria explicitly stated — else `Not Found` |
 | 17 | `Consortium_Allowed` | Yes / No / Not Stated — only what is explicitly mentioned |
-| 18 | `Lead_Partner` | AfroPavo / BSM Washauri / Dentons / CEOrt / Joint — which anchor should lead the bid |
+| 18 | `Lead_Partner` | AfroPavo / BSM Washauri / Dentons / Joint — which anchor should lead the bid |
 | 19 | `Description` | 2–3 sentences strictly from source content |
 | 20 | `Relevance_Score` | High / Medium / Low (see scoring) |
 | 21 | `Flags` | Eligibility concerns, `single-source`, `UNVERIFIED` notes — else `None` |
@@ -308,7 +305,7 @@ Extract each field **only** from the fetched page/PDF. Write `Not Found` / `Not 
 - Climate/green technical assistance, feasibility, MRV/MEL, impact measurement
 - Climate-smart agriculture, renewable energy feasibility, nature-based solutions with a finance/advisory component
 - Legal/fiduciary advisory on climate transactions (Dentons-led)
-- Capacity building / knowledge hubs on ESG & climate finance (CEOrt-led)
+- Capacity building / knowledge hubs on ESG & climate finance
 - Anything hosted or funded by a known relationship (FSDT, FSD Africa, etc.)
 
 **MEDIUM** — adjacent / partial fit:
@@ -407,7 +404,7 @@ Send via the **Gmail connector**. **Every email MUST (a) carry the CSV as a dire
         <tr>
           <td style="background:#14532d;padding:26px 32px;">
             <p style="margin:0;font-size:11px;color:#9fd3b4;letter-spacing:1px;text-transform:uppercase;">
-              AfroPavo &nbsp;&middot;&nbsp; BSM Washauri &nbsp;&middot;&nbsp; Dentons EALC &nbsp;&middot;&nbsp; CEOrt
+              AfroPavo &nbsp;&middot;&nbsp; BSM Washauri &nbsp;&middot;&nbsp; Dentons EALC
             </p>
             <h1 style="margin:6px 0 0;font-size:22px;color:#ffffff;font-weight:700;">ESG OpportunityScout Weekly Report</h1>
             <p style="margin:4px 0 0;font-size:13px;color:#b7e0c6;">Green &amp; Climate Finance &middot; Tanzania, East &amp; Southern Africa &middot; [YYYY-MM-DD]</p>

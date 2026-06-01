@@ -1,6 +1,6 @@
 # ESG OpportunityScout
 
-A **knowledge repository and Claude-driven automation skill** that scouts for ESG, climate-finance, and green-finance opportunities across **Tanzania, East Africa, and Southern Africa** on behalf of the consortium of **AfroPavo Analytics Ltd**, **BSM Washauri (TZ) Ltd**, and **Dentons EALC**, with **CEOrt Tanzania** as institutional partner.
+A **knowledge repository and Claude-driven automation skill** that scouts for ESG, climate-finance, and green-finance opportunities across **Tanzania, East Africa, and Southern Africa** on behalf of the consortium of **AfroPavo Analytics Ltd**, **BSM Washauri (TZ) Ltd**, and **Dentons EALC**.
 
 This repo is not a conventional application. It is the **source of record** that a Claude routine reads on every run — the verified link registry, the consortium knowledge base, and the skill definition that tells Claude exactly how to search, verify, score, and report opportunities.
 
@@ -71,7 +71,6 @@ esg-opportunity-scout/
 | **AfroPavo Analytics** | Climate-finance instruments, green-finance structuring, data/AI/ML, applied research, impact metrics, MEL/MRV design |
 | **BSM Washauri (TZ)** | Strategy, governance, policy, institutional development, stakeholder engagement, proposal structuring, training |
 | **Dentons EALC** | Legal, regulatory, fiduciary, ESG-compliance frameworks, GCF transaction structuring |
-| **CEOrt Tanzania** *(institutional)* | Knowledge hubs, learning platforms, ESG / sustainability / climate-finance training |
 
 **Geographic scope:** Tanzania (HQ — searched every run), East Africa (Kenya, Uganda, Rwanda, Burundi, South Sudan, DRC), and Southern Africa (South Africa, Mozambique, Zambia, Zimbabwe, Malawi, Namibia, Botswana, Angola, Lesotho, eSwatini, Madagascar, Mauritius), plus regional / multi-country programmes.
 
@@ -95,7 +94,6 @@ The full protocol lives in [`.claude/skills/esg-opportunity-scout/SKILL.md`](.cl
 ## Maintenance
 
 - **Keep `links.md` current.** It is both the link registry and the source registry — when a source moves, dies, or becomes blocked, update its entry with the date and status.
-- **CEOrt** is described from the MoU (which names it as the knowledge-hub / training institutional partner); there is no separate CEOrt profile file.
 - **Confirm recipients in writing** before adding anyone to the email distribution list. Note: `procurement@fsdt.or.tz` is an external bid-submission address and is **never** CC'd on the internal report.
 
 ---
