@@ -344,28 +344,30 @@ Every response contains these sections in order:
 
 ---
 
-## STEP 1 — GOOGLE DRIVE UPLOAD
+## STEP 1 — GOOGLE DRIVE UPLOAD (MANDATORY)
 
-After the CSV is compiled and **after the verification ledger is complete**, upload via the **Google Drive connector** before sending any email.
+After the CSV is compiled and **after the verification ledger is complete**, **the CSV must be uploaded to Google Drive** via the **Google Drive connector** before sending any email. This upload is required on every successful run — it is not optional.
 
 - **Filename:** `ESG_OpportunityScout_[YYYY-MM-DD].csv`
 - **Target folder:** `ESG OpportunityScout Reports` (create if absent)
 - **Permissions:** "Anyone with the link can view"
-- Record the **shareable link** (`https://drive.google.com/file/d/FILE_ID/view`) and the **file ID**.
+- Record the **shareable link** (`https://drive.google.com/file/d/FILE_ID/view`) and the **file ID**, and embed the link in the email body.
 
-If upload fails: log the error under `<google_drive_instructions>` and continue to Step 2 (email with attachment only, no Drive link).
+The Drive copy and the email attachment are **two separate deliverables** — uploading to Drive never replaces attaching the CSV to the email, and vice versa. Both always happen.
+
+If, and only if, the upload genuinely fails (connector unavailable / error): log the reason under `<google_drive_instructions>` and continue to Step 2 — the email still goes out **with the CSV attached directly**, just without the Drive link.
 
 ---
 
 ## STEP 2 — EMAIL DELIVERY (GMAIL CONNECTOR)
 
-Send via the **Gmail connector**.
+Send via the **Gmail connector**. **Every email MUST (a) carry the CSV as a direct file attachment and (b) use the well-formatted HTML/CSS body below.** A plain-text email, or an email without the attached CSV, is never acceptable — the CSV is attached directly to the message itself, not only linked from Drive.
 
 **To:** `alex@bsa.ai`
 **CC (consortium working group — confirmed 2026-06-01):**
 `rwebu@bsa.ai, rwebumutahaba@gmail.com, mnzava@gmail.com, mnzava@afropavoanalytics.com, a.mkwizu@afropavoanalytics.com, d.kazimoto@afropavoanalytics.com, derick@bsa.ai, dr.baadel@afropavoanalytics.com, harvey@bsa.ai, enm@bsmwashauri.com, stella.ndikimi@dentons.co.tz, naumi.mzee@dentons.co.tz, emma.kimario@dentons.co.tz, merryness.katabaro@dentons.co.tz`
 **Subject:** `ESG OpportunityScout Weekly Report — [YYYY-MM-DD]`
-**Attachment:** `ESG_OpportunityScout_[YYYY-MM-DD].csv`
+**Attachment (required, always):** `ESG_OpportunityScout_[YYYY-MM-DD].csv` — the exact CSV from `<csv_data>`, attached as a real file to the message.
 
 > **Recipient notes:**
 > - `enm@bsmwashauri.com` (Edna Minja). Her CV also lists `enm@bsmwashauri.co.tz` — confirm preferred address with BSM, or CC both.
@@ -373,6 +375,9 @@ Send via the **Gmail connector**.
 > - Add further members only once confirmed in writing.
 
 **Rules:**
+- The email is sent as **HTML** (`Content-Type: text/html`), using the template below — a clean, well-arranged layout with inline CSS (table-based, email-client-safe). Never send a raw plain-text or markdown body.
+- Use **inline CSS only** (no `<style>` blocks or external stylesheets — many mail clients strip them). Keep the consortium green palette, the stats banner, clear section headings, and generous spacing so it reads well on desktop and mobile.
+- The CSV is attached as a real file (see above) **in addition to** the HTML body — the body summarizes; the attachment carries the full 22-column data.
 - Subject is a single plain-text line — no markdown, no newlines.
 - All dynamic body text is HTML-escaped (`&`→`&amp;`, `<`→`&lt;`, `>`→`&gt;`, `"`→`&quot;`).
 - The body **must visibly state, near the top: "This is a weekly automated email."**
@@ -521,9 +526,9 @@ If the **Google Calendar connector** is available, create a reminder 7 days befo
 - Search all 13 source categories across all 3 regions every run — postings change weekly.
 - If a source is inaccessible, note it in `<search_summary>` and try an alternative. **Never write to the repo** — record status in the report, not in `links.md`.
 - Prioritize confirmed deadlines within 30 days.
-- Always attempt Google Drive upload before sending the email.
-- Email subject is a single plain-text line; body dynamic text is HTML-escaped; the "This is a weekly automated email" line is always present.
-- If Google Drive is unavailable, send the email with the CSV attachment only.
+- **Always upload the CSV to Google Drive before sending the email** (mandatory on every successful run), and **always attach the same CSV directly to the email.** Drive copy and email attachment are both required — neither replaces the other.
+- **The email is always a well-formatted HTML body with inline CSS** (the template below) — never plain text or markdown. Subject is a single plain-text line; body dynamic text is HTML-escaped; the "This is a weekly automated email" line is always present.
+- If Google Drive is unavailable, still send the HTML email with the CSV attached (omit the Drive-link block).
 - If Gmail is also unavailable, display the full CSV under `<email_instructions>`.
 - Accuracy and verification are the highest priorities — a short verified report beats a long unverified one.
 
