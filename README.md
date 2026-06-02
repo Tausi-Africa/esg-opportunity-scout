@@ -35,6 +35,9 @@ esg-opportunity-scout/
 │       └── esg-opportunity-scout/
 │           └── SKILL.md               # The Claude skill: search → verify → score → report → deliver
 │
+├── template/
+│   └── email_html_template.html       # CANONICAL email design (used verbatim by the routine)
+│
 ├── knowledge-base/
 │   ├── consortium-mou.md              # Consortium MoU — roles & collaboration areas
 │   └── company-profiles/
@@ -59,7 +62,8 @@ esg-opportunity-scout/
 |---|---|
 | `instruction.md` | The **weekly run instructions** handed to the Claude routine — 10 ordered steps (tooling check → read skill → read knowledge → plan → search → verify → compile CSV → Drive → email → calendar → final report), each with a verification gate. Points at `SKILL.md` for the search universe, scoring, CSV schema, and email template. |
 | `links.md` | The **master verified link registry** *(and source registry)* — Priority-1 source list searched before any default source. ~86 curated procurement/tender links across governments, regional bodies, climate finance, DFIs, UN agencies, embassies, foundations, and aggregators. Source reachability/status is tracked here too. |
-| `.claude/skills/esg-opportunity-scout/SKILL.md` | The full operating manual for the Claude routine: startup checklist, strict accuracy rules, three-tier verification protocol, source universe, keyword sets, 22-column CSV schema, relevance scoring, response structure, and Drive/Gmail/Calendar delivery steps. |
+| `.claude/skills/esg-opportunity-scout/SKILL.md` | The full operating manual for the Claude routine: startup checklist, strict accuracy rules, three-tier verification protocol, source universe, keyword sets, 22-column CSV schema, relevance scoring, response structure, and Drive/Gmail/Calendar delivery steps. Points to the canonical email template. |
+| `template/email_html_template.html` | The **canonical email design** — single source of truth for the HTML report layout (black-green header/footer, stat row, green opportunity cards, Drive button). The routine loads this and fills in each run's real values; it is never restyled inline. |
 | `knowledge-base/consortium-mou.md` | Defines partner roles and collaboration areas — the basis for lead-partner assignment. |
 | `knowledge-base/company-profiles/*` | Per-firm capability detail used to score opportunity fit. |
 | `team-cvs/*` | Named experts and qualifications, matched against opportunity criteria. |

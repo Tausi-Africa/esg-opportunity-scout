@@ -28,7 +28,8 @@ Actual repository structure:
 
 ```
 links.md                                                          <- MASTER verified link registry + source registry (Priority-1 source list)
-.claude/skills/esg-opportunity-scout/SKILL.md                     <- this scout's full operating instructions + email template
+.claude/skills/esg-opportunity-scout/SKILL.md                     <- this scout's full operating instructions
+template/email_html_template.html                                 <- CANONICAL email design (single source of truth — use verbatim)
 knowledge-base/consortium-mou.md                                  <- consortium MoU: roles, collaboration areas
 knowledge-base/company-profiles/afropavo_company_data_a.md        <- AfroPavo overview, services, case studies
 knowledge-base/company-profiles/afropavo_company_data_b.md        <- AfroPavo additional projects, references
@@ -80,7 +81,7 @@ If `web_fetch` is unavailable, stop and report: *"web_fetch is unavailable. Sour
 
 ## STEP 1 — READ THE SKILL FILE
 
-Read `.claude/skills/esg-opportunity-scout/SKILL.md` from the repository. It contains your full operating instructions: search universe, keyword sets, relevance scoring, the verification protocol, the CSV schema, and the **email template (the canonical design — use it verbatim)**.
+Read `.claude/skills/esg-opportunity-scout/SKILL.md` from the repository. It contains your full operating instructions: search universe, keyword sets, relevance scoring, the verification protocol, and the CSV schema. The **canonical email design is `template/email_html_template.html`** — read that file too and use it verbatim (SKILL.md points to it and lists the values to substitute).
 
 **VERIFICATION 1:**
 - ✅ SKILL.md read successfully
@@ -88,7 +89,7 @@ Read `.claude/skills/esg-opportunity-scout/SKILL.md` from the repository. It con
 - ✅ Number of climate-fund / DFI sources loaded: [N]
 - ✅ Number of embassy / bilateral-donor sources loaded: [N]
 - ✅ Verification protocol loaded (Tier-1 existence + Tier-2 content match + Tier-3 corroboration)
-- ✅ Email template + "EMAIL DESIGN — HARD RULE" loaded
+- ✅ Canonical email template `template/email_html_template.html` read + "EMAIL DESIGN — HARD RULE" loaded
 - ✅ Delivery recipients confirmed (see Step 8)
 
 If SKILL.md is missing or unreadable, stop and report: *"SKILL.md could not be read. Cannot proceed without operating instructions."*
@@ -268,7 +269,7 @@ merryness.katabaro@dentons.co.tz
 > - **Do NOT add `procurement@fsdt.or.tz`.** That address is an external funder (FSDT) that receives *bid submissions*, not the internal weekly scout report. Keep it off this list.
 > - Add any further Dentons / BSM / AfroPavo members only once confirmed in writing.
 
-**Body:** use the **full HTML template from SKILL.md verbatim** (see its "EMAIL DESIGN — HARD RULE" section). A plain or unstyled email is a failed run. Substitute every placeholder with real values, and **render the verified opportunities as styled green cards** (one card per opportunity, High first then Medium, ~8 max — copy the `<!-- Opportunity card -->` block and fill it each time):
+**Body:** use the **canonical template `template/email_html_template.html` verbatim** (SKILL.md's "EMAIL DESIGN — HARD RULE" points to it). A plain or unstyled email is a failed run. Substitute every sample/placeholder value with real values, and **render the verified opportunities as styled green cards** (one card per opportunity, High first then Medium, ~8 max — copy an opportunity-card block and fill it each time):
 - `[YYYY-MM-DD]` → today's date
 - `[TOTAL]` / `[HIGH]` / `[MEDIUM]` / `[LOW]` → confirmed counts
 - `[UNVERIFIED]` → count of flagged-but-included items
@@ -280,7 +281,7 @@ merryness.katabaro@dentons.co.tz
 
 **How to send it correctly (this is where the email and attachment usually fail):**
 - The email is a client-facing deliverable: it MUST be the beautified, well-spaced, green-themed card layout from SKILL.md. Use that template **verbatim** — do not regenerate, simplify, or strip its styling.
-- **The background is never pure white, and contrast is mandatory.** The repo template uses a muted-sage page, a light-green container, and dark text tuned for legibility — keep it exactly as-is so no word disappears. Never put light/mid-grey text on a white field.
+- **The background is never pure white, and contrast is mandatory.** The repo template uses a soft sage page, a light container, dark body text, and a **black-green header and footer band (`#08291c` / `#061d14`) with near-white text** — keep it exactly as-is so no word disappears. Never put light/mid-grey text on a white field, and never revert the header/footer to a bright-green gradient or light-green-on-green text.
 - Send the body as **HTML** — use the connector's HTML-body field / `text/html` content type. Do **not** put the HTML into a plain-text body, or recipients see raw tags / no styling.
 - **Escape ONLY the dynamic values you substitute into the `[placeholders]`** (`&`→`&amp;`, `<`→`&lt;`, `>`→`&gt;`, `"`→`&quot;`). **Never escape the template's own `<table>`/`<td>`/`style` markup** — escaping the whole body is the usual cause of an "unformatted" email.
 - Keep all CSS **inline** and keep the `width="640"` table layout — that is what gives the spacing/design. Do not rely on a `<style>` block.
