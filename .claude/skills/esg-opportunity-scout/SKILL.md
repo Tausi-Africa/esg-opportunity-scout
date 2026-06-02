@@ -375,11 +375,12 @@ Send via the **Gmail connector**. **Every email MUST (a) carry the CSV as a dire
 
 This template **is** the email. It is the canonical design held in this repo — use it **verbatim**; do not regenerate, simplify, restyle, or strip it. An unstyled, plain-text, or attachment-less email is a failed run.
 
-- The email is sent as **HTML** (`Content-Type: text/html`), using the template below — a clean, well-arranged, table-based layout with inline CSS (email-client-safe). Never send a raw plain-text or markdown body.
+- The email is sent as **HTML** (`Content-Type: text/html`), using the canonical template file `template/email_html_template.html` — a clean, well-arranged, table-based layout with inline CSS (email-client-safe). Never send a raw plain-text or markdown body.
 - Use **inline CSS only** (no `<style>` blocks or external stylesheets — many mail clients strip them). Keep the `width="640"` table layout; that is what gives the spacing and design.
-- **Contrast is mandatory. The background is never pure white** — the page is a muted sage, the card a light green tint, and every text colour is a dark tone chosen to read clearly on its panel. Never place light or mid-grey text on a white/near-white field; if you adjust a colour, keep a strong dark-on-light (or light-on-dark-green) contrast so no word disappears.
-- Render the verified opportunities as **styled green cards** — one card per opportunity, **High first then Medium**, ~8 max. Copy the `<!-- Opportunity card -->` block once per opportunity and fill its placeholders; set the badge + left-border colour by relevance (High `#1b7a3d`, Medium `#a85607`, Low `#5a6b60`).
+- **The background is white. Contrast is mandatory** — text, icons, headings, and accents must all be dark or saturated colours that read clearly on white. Body text is dark grey (`#1f2933` / `#374151`), headings are dark green (`#0B3D2E`), accents/links/buttons are green (`#15803D`). Never use white, light-grey, or pale-green text on the white background, and never light-on-light — every word and icon must stay visible.
+- Render the verified opportunities as **styled cards on white** — one card per opportunity, **High first then Medium**, ~8 max. Copy an opportunity-card block once per opportunity and fill it; set the relevance pill + left-border colour (High pill `#166534` on `#DCFCE7` / border `#15803D`; Medium pill `#B45309` on `#FEF3C7` / border `#B45309`; Low pill `#475569` on `#E2E8F0` / border `#475569`).
 - **Escape only the dynamic values** you substitute into `[placeholders]` (`&`→`&amp;`, `<`→`&lt;`, `>`→`&gt;`, `"`→`&quot;`). **Never escape the template's own `<table>`/`<td>`/`style` markup** — escaping the whole body is the usual cause of an "unformatted" email.
+- **Sanitize the body — client-facing content only.** The email contains only the finished report (notice line, header, stat row, top opportunity, verified opportunity cards, Drive link, attachment note, footer). **Never put error messages, stack traces, tool/connector-status notes, the verification ledger, search diagnostics, "I could not fetch…" text, unfilled `[placeholders]`/`[brackets]`, or any process/debug output into the email.** All diagnostics, failures, and the audit trail go to the routine logs and the structured `<…>` response sections — never to the recipients. For a missing field use the report's normal `Not Stated` / `Not Found` wording, not an error; if there are no verified opportunities, send the template with a brief "No new verified opportunities this week" note rather than any error text.
 - The CSV is attached as a real file (see above) **in addition to** the HTML body — the body summarizes; the attachment carries the full 22-column data.
 - Subject is a single plain-text line — no markdown, no newlines.
 - The body **must visibly state, near the top: "This is a weekly automated email."**
@@ -392,11 +393,11 @@ Values to substitute in the template:
 - date (header, subtitle, footer, CSV filename) → today's `YYYY-MM-DD`
 - stat row → Verified `[TOTAL]`, `[HIGH]`, `[MEDIUM]`, `[LOW]`, `[Flagged]`
 - Top Opportunity paragraph → one sentence on the single most promising **verified** opportunity and why it fits the consortium
-- opportunity cards → one card per opportunity, **High first then Medium**, ~8 max; per card set the title, `organization · region · deadline · lead partner`, the verified `View opportunity` URL, and the relevance pill (High = `#166534` on `#DCFCE7`; Medium = `#B45309` on `#FEF3C7`; Low = `#475569` on `#e2e8f0`)
+- opportunity cards → one card per opportunity, **High first then Medium**, ~8 max; per card set the title, `organization · region · deadline · lead partner`, the verified `View opportunity` URL, and the relevance pill (High = `#166534` on `#DCFCE7`; Medium = `#B45309` on `#FEF3C7`; Low = `#475569` on `#E2E8F0`)
 - Drive button + link → the Step 1 shareable link and file ID
 - attachment note → the real CSV filename
 
-**Header and footer are a black-green band** (`#08291c` / `#061d14`) with near-white text — this is the high-contrast scheme. Do **not** revert to a bright-green gradient or light-green-on-green text; that is the low-contrast bug this design fixes.
+**The whole email is white-background** with dark text and green accents — a thin green top rule and green dividers/links/buttons provide the branding. Do **not** add dark or coloured background bands, and do **not** use light-coloured text; everything must stay legible on white.
 
 **If Google Drive upload failed**, swap the Drive-button block for this notice (everything else unchanged):
 
@@ -432,7 +433,8 @@ If the **Google Calendar connector** is available, create a reminder 7 days befo
 - If a source is inaccessible, note it in `<search_summary>` and try an alternative. **Never write to the repo** — record status in the report, not in `links.md`.
 - Prioritize confirmed deadlines within 30 days.
 - **Always upload the CSV to Google Drive before sending the email** (mandatory on every successful run), and **always attach the same CSV directly to the email.** Drive copy and email attachment are both required — neither replaces the other.
-- **The email is always a well-formatted HTML body with inline CSS** (the template below) — never plain text or markdown. Subject is a single plain-text line; body dynamic text is HTML-escaped; the "This is a weekly automated email" line is always present.
+- **The email is always a well-formatted HTML body with inline CSS** (the canonical `template/email_html_template.html`) — never plain text or markdown. Subject is a single plain-text line; body dynamic text is HTML-escaped; the "This is a weekly automated email" line is always present.
+- **Sanitize the email before sending — client-facing report only.** No error messages, tool/connector-status notes, verification ledger, search diagnostics, or unfilled `[placeholders]` in the body. Errors and the audit trail go to the routine logs and the `<…>` response sections, never to recipients.
 - If Google Drive is unavailable, still send the HTML email with the CSV attached (omit the Drive-link block).
 - If Gmail is also unavailable, display the full CSV under `<email_instructions>`.
 - Accuracy and verification are the highest priorities — a short verified report beats a long unverified one.

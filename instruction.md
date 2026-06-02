@@ -275,25 +275,27 @@ merryness.katabaro@dentons.co.tz
 - `[UNVERIFIED]` → count of flagged-but-included items
 - `[GOOGLE_DRIVE_LINK]` → link from Step 7 (or the Drive-failed banner)
 - `[TOP_OPPORTUNITY]` → one sentence on the single most promising **verified** opportunity and why it fits the consortium
-- per-card fields → `[OPP_TITLE]`, `[ORGANIZATION]`, `[REGION]`, `[DEADLINE]`, `[LEAD_PARTNER]`, `[OPP_URL]`, and the `[RELEVANCE]` badge with the correct colour (High `#1b7a3d`, Medium `#a85607`, Low `#5a6b60`)
+- per-card fields → `[OPP_TITLE]`, `[ORGANIZATION]`, `[REGION]`, `[DEADLINE]`, `[LEAD_PARTNER]`, `[OPP_URL]`, and the `[RELEVANCE]` pill + left border (High pill `#166534` on `#DCFCE7` / border `#15803D`; Medium pill `#B45309` on `#FEF3C7` / border `#B45309`; Low pill `#475569` on `#E2E8F0` / border `#475569`)
 
 **Mandatory disclaimer:** the email body must visibly state, near the top: **This is a weekly automated email.**
 
 **How to send it correctly (this is where the email and attachment usually fail):**
 - The email is a client-facing deliverable: it MUST be the beautified, well-spaced, green-themed card layout from SKILL.md. Use that template **verbatim** — do not regenerate, simplify, or strip its styling.
-- **The background is never pure white, and contrast is mandatory.** The repo template uses a soft sage page, a light container, dark body text, and a **black-green header and footer band (`#08291c` / `#061d14`) with near-white text** — keep it exactly as-is so no word disappears. Never put light/mid-grey text on a white field, and never revert the header/footer to a bright-green gradient or light-green-on-green text.
+- **The background is white, and contrast is mandatory.** The repo template uses a white background with **dark text and saturated green accents** — body text dark grey (`#1f2933`/`#374151`), headings dark green (`#0B3D2E`), links/buttons/dividers green (`#15803D`), and coloured relevance pills. Keep it exactly as-is so every word and icon stays visible. Never use white, light-grey, or pale-green text on the white background, and do not add dark background bands.
 - Send the body as **HTML** — use the connector's HTML-body field / `text/html` content type. Do **not** put the HTML into a plain-text body, or recipients see raw tags / no styling.
 - **Escape ONLY the dynamic values you substitute into the `[placeholders]`** (`&`→`&amp;`, `<`→`&lt;`, `>`→`&gt;`, `"`→`&quot;`). **Never escape the template's own `<table>`/`<td>`/`style` markup** — escaping the whole body is the usual cause of an "unformatted" email.
 - Keep all CSS **inline** and keep the `width="640"` table layout — that is what gives the spacing/design. Do not rely on a `<style>` block.
 - Attach the **actual CSV file from Step 6** by path / file reference (or its bytes with filename `ESG_OpportunityScout_[YYYY-MM-DD].csv`, MIME `text/csv`) — never the CSV pasted as text.
 - Optionally include a short plain-text alternative part (2–3 line summary + Drive link) for clients that block HTML.
+- **Sanitize the draft before sending — client-facing content only.** The email body contains nothing but the finished report. **Never include error messages, stack traces, tool/connector-status notes, the verification ledger, search diagnostics, "could not fetch / blocked" text, unfilled `[placeholders]`, or any process/debug output.** All errors, failures, and the audit trail stay in the routine logs and the structured `<…>` sections (Step 10) — they are inspected there, not e-mailed to recipients. For a missing field use the report's normal `Not Stated` / `Not Found` wording; if there are no verified opportunities, send a brief "No new verified opportunities this week" note instead of any error text.
 
-Before sending, verify: subject is a single plain-text line; only dynamic values are escaped; the CSV **file** is attached; all 14 recipients are correct; the automated-email line is present.
+Before sending, verify: subject is a single plain-text line; only dynamic values are escaped; the body is sanitized (no errors, logs, ledger, diagnostics, or unfilled `[placeholders]`); the CSV **file** is attached; all 14 recipients are correct; the automated-email line is present.
 
 **VERIFICATION 8:**
 - ✅ / ❌ Email sent — confirmed by a message/thread ID in the tool response (state reason if failed)
 - ✅ Body sent as **HTML** (not plain text); only dynamic values escaped, template markup intact
-- ✅ Background is not white; all text legible (contrast preserved)
+- ✅ Background is white; all text and icons legible (dark text / green accents, strong contrast)
+- ✅ Body sanitized — no error/diagnostic/log/ledger text and no unfilled `[placeholders]` in the email
 - ✅ To: alex@bsa.ai
 - ✅ CC: all 14 consortium addresses (incl. a.mkwizu@, d.kazimoto@, enm@bsmwashauri.com, and the four Dentons addresses); FSDT procurement excluded
 - ✅ Subject contains today's date, no newlines
@@ -342,7 +344,7 @@ Produce the structured final response with all sections:
 - [ ] CSV has exactly 22 columns and correct filename
 - [ ] **CSV written to a real file (size > 0) before any upload/attach**
 - [ ] Google Drive upload attempted; real file ID read back from the tool result (logged)
-- [ ] Gmail send attempted; body sent as **HTML** (only dynamic values escaped); background not white / contrast preserved; **CSV file attachment confirmed present in the tool result** (logged)
+- [ ] Gmail send attempted; body sent as **HTML** (only dynamic values escaped); white background with legible dark text / green accents; **body sanitized — no error/log/ledger/diagnostic text or unfilled placeholders**; **CSV file attachment confirmed present in the tool result** (logged)
 - [ ] All 14 consortium CC recipients used (AfroPavo, bsa.ai, BSM Washauri, Dentons); FSDT procurement deliberately excluded
 - [ ] "This is a weekly automated email" line present
 - [ ] Nothing written back to the repository (read-only)
