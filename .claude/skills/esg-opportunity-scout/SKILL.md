@@ -371,12 +371,17 @@ Send via the **Gmail connector**. **Every email MUST (a) carry the CSV as a dire
 > - **Never CC `procurement@fsdt.or.tz`.** It is an external funder address for *bid submissions*, not the internal weekly report.
 > - Add further members only once confirmed in writing.
 
-**Rules:**
-- The email is sent as **HTML** (`Content-Type: text/html`), using the template below — a clean, well-arranged layout with inline CSS (table-based, email-client-safe). Never send a raw plain-text or markdown body.
-- Use **inline CSS only** (no `<style>` blocks or external stylesheets — many mail clients strip them). Keep the consortium green palette, the stats banner, clear section headings, and generous spacing so it reads well on desktop and mobile.
+### EMAIL DESIGN — HARD RULE
+
+This template **is** the email. It is the canonical design held in this repo — use it **verbatim**; do not regenerate, simplify, restyle, or strip it. An unstyled, plain-text, or attachment-less email is a failed run.
+
+- The email is sent as **HTML** (`Content-Type: text/html`), using the template below — a clean, well-arranged, table-based layout with inline CSS (email-client-safe). Never send a raw plain-text or markdown body.
+- Use **inline CSS only** (no `<style>` blocks or external stylesheets — many mail clients strip them). Keep the `width="640"` table layout; that is what gives the spacing and design.
+- **Contrast is mandatory. The background is never pure white** — the page is a muted sage, the card a light green tint, and every text colour is a dark tone chosen to read clearly on its panel. Never place light or mid-grey text on a white/near-white field; if you adjust a colour, keep a strong dark-on-light (or light-on-dark-green) contrast so no word disappears.
+- Render the verified opportunities as **styled green cards** — one card per opportunity, **High first then Medium**, ~8 max. Copy the `<!-- Opportunity card -->` block once per opportunity and fill its placeholders; set the badge + left-border colour by relevance (High `#1b7a3d`, Medium `#a85607`, Low `#5a6b60`).
+- **Escape only the dynamic values** you substitute into `[placeholders]` (`&`→`&amp;`, `<`→`&lt;`, `>`→`&gt;`, `"`→`&quot;`). **Never escape the template's own `<table>`/`<td>`/`style` markup** — escaping the whole body is the usual cause of an "unformatted" email.
 - The CSV is attached as a real file (see above) **in addition to** the HTML body — the body summarizes; the attachment carries the full 22-column data.
 - Subject is a single plain-text line — no markdown, no newlines.
-- All dynamic body text is HTML-escaped (`&`→`&amp;`, `<`→`&lt;`, `>`→`&gt;`, `"`→`&quot;`).
 - The body **must visibly state, near the top: "This is a weekly automated email."**
 
 **Body — HTML template (substitute all `[placeholders]`):**
@@ -385,16 +390,18 @@ Send via the **Gmail connector**. **Every email MUST (a) carry the CSV as a dire
 <!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background:#f4f6f9;font-family:Arial,Helvetica,sans-serif;color:#222;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f6f9;padding:24px 0;">
+<!-- Page background is a muted sage — never pure white. -->
+<body style="margin:0;padding:0;background:#cdddd0;font-family:Arial,Helvetica,sans-serif;color:#1f2d24;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#cdddd0;padding:24px 0;">
     <tr><td align="center">
+      <!-- Main container: light green tint, NOT white -->
       <table width="640" cellpadding="0" cellspacing="0"
-             style="background:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08);">
+             style="background:#eef4ee;border-radius:8px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.12);">
 
         <!-- Automated notice -->
         <tr>
-          <td style="background:#0f5132;padding:8px 32px;">
-            <p style="margin:0;font-size:11px;color:#d1e7dd;letter-spacing:.5px;text-transform:uppercase;">
+          <td style="background:#0f5132;padding:9px 32px;">
+            <p style="margin:0;font-size:11px;color:#d7efe2;letter-spacing:.5px;text-transform:uppercase;font-weight:700;">
               This is a weekly automated email
             </p>
           </td>
@@ -403,33 +410,33 @@ Send via the **Gmail connector**. **Every email MUST (a) carry the CSV as a dire
         <!-- Header -->
         <tr>
           <td style="background:#14532d;padding:26px 32px;">
-            <p style="margin:0;font-size:11px;color:#9fd3b4;letter-spacing:1px;text-transform:uppercase;">
+            <p style="margin:0;font-size:11px;color:#a8d8ba;letter-spacing:1px;text-transform:uppercase;">
               AfroPavo &nbsp;&middot;&nbsp; BSM Washauri &nbsp;&middot;&nbsp; Dentons EALC
             </p>
             <h1 style="margin:6px 0 0;font-size:22px;color:#ffffff;font-weight:700;">ESG OpportunityScout Weekly Report</h1>
-            <p style="margin:4px 0 0;font-size:13px;color:#b7e0c6;">Green &amp; Climate Finance &middot; Tanzania, East &amp; Southern Africa &middot; [YYYY-MM-DD]</p>
+            <p style="margin:4px 0 0;font-size:13px;color:#cce8d4;">Green &amp; Climate Finance &middot; Tanzania, East &amp; Southern Africa &middot; [YYYY-MM-DD]</p>
           </td>
         </tr>
 
-        <!-- Stats Banner -->
+        <!-- Stats Banner (dark text on a light-green panel) -->
         <tr>
-          <td style="background:#eaf5ee;padding:16px 32px;border-bottom:1px solid #cfe6d7;">
+          <td style="background:#dcebe0;padding:16px 32px;border-bottom:1px solid #bcd6c3;">
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr>
-                <td style="font-size:13px;color:#14532d;padding:4px 12px 4px 0;border-right:1px solid #c0d8c8;text-align:center;">
-                  <strong style="font-size:22px;display:block;">[TOTAL]</strong>Verified
+                <td style="font-size:13px;color:#14532d;padding:4px 12px 4px 0;border-right:1px solid #bcd6c3;text-align:center;">
+                  <strong style="font-size:22px;display:block;color:#14532d;">[TOTAL]</strong>Verified
                 </td>
-                <td style="font-size:13px;color:#2e7d32;padding:4px 12px;border-right:1px solid #c0d8c8;text-align:center;">
-                  <strong style="font-size:22px;display:block;">[HIGH]</strong>High
+                <td style="font-size:13px;color:#1b7a3d;padding:4px 12px;border-right:1px solid #bcd6c3;text-align:center;">
+                  <strong style="font-size:22px;display:block;color:#1b7a3d;">[HIGH]</strong>High
                 </td>
-                <td style="font-size:13px;color:#e65100;padding:4px 12px;border-right:1px solid #c0d8c8;text-align:center;">
-                  <strong style="font-size:22px;display:block;">[MEDIUM]</strong>Medium
+                <td style="font-size:13px;color:#a85607;padding:4px 12px;border-right:1px solid #bcd6c3;text-align:center;">
+                  <strong style="font-size:22px;display:block;color:#a85607;">[MEDIUM]</strong>Medium
                 </td>
-                <td style="font-size:13px;color:#555;padding:4px 12px;border-right:1px solid #c0d8c8;text-align:center;">
-                  <strong style="font-size:22px;display:block;">[LOW]</strong>Low
+                <td style="font-size:13px;color:#41514a;padding:4px 12px;border-right:1px solid #bcd6c3;text-align:center;">
+                  <strong style="font-size:22px;display:block;color:#41514a;">[LOW]</strong>Low
                 </td>
-                <td style="font-size:13px;color:#9a6700;padding:4px 12px;text-align:center;">
-                  <strong style="font-size:22px;display:block;">[UNVERIFIED]</strong>Flagged
+                <td style="font-size:13px;color:#8a5a00;padding:4px 12px;text-align:center;">
+                  <strong style="font-size:22px;display:block;color:#8a5a00;">[UNVERIFIED]</strong>Flagged
                 </td>
               </tr>
             </table>
@@ -438,28 +445,59 @@ Send via the **Gmail connector**. **Every email MUST (a) carry the CSV as a dire
 
         <!-- Top Opportunity -->
         <tr>
-          <td style="padding:24px 32px 12px;">
+          <td style="padding:24px 32px 8px;">
             <h2 style="margin:0 0 10px;font-size:14px;font-weight:700;color:#14532d;
                         text-transform:uppercase;letter-spacing:.5px;
                         border-bottom:2px solid #14532d;padding-bottom:6px;">
               Top Opportunity This Week
             </h2>
-            <p style="margin:0;font-size:14px;line-height:1.7;color:#333;">[TOP_OPPORTUNITY]</p>
+            <p style="margin:0;font-size:14px;line-height:1.7;color:#243b2c;">[TOP_OPPORTUNITY]</p>
           </td>
         </tr>
 
+        <!-- Verified Opportunities -->
+        <tr>
+          <td style="padding:16px 32px 4px;">
+            <h2 style="margin:0 0 4px;font-size:14px;font-weight:700;color:#14532d;
+                        text-transform:uppercase;letter-spacing:.5px;
+                        border-bottom:2px solid #14532d;padding-bottom:6px;">
+              Verified Opportunities
+            </h2>
+          </td>
+        </tr>
+
+        <!-- Opportunity card — DUPLICATE this <tr> once per opportunity (High first, then Medium; ~8 max).
+             Badge + left border colour by relevance: High #1b7a3d · Medium #a85607 · Low #5a6b60 -->
+        <tr>
+          <td style="padding:8px 32px;">
+            <table width="100%" cellpadding="0" cellspacing="0"
+                   style="background:#e7f2ea;border:1px solid #cfe6d7;border-left:5px solid #1b7a3d;border-radius:6px;">
+              <tr><td style="padding:14px 18px;">
+                <span style="display:inline-block;background:#1b7a3d;color:#ffffff;font-size:10px;font-weight:700;
+                             letter-spacing:.5px;text-transform:uppercase;padding:3px 10px;border-radius:11px;">[RELEVANCE]</span>
+                <h3 style="margin:9px 0 4px;font-size:15px;color:#14532d;line-height:1.4;">[OPP_TITLE]</h3>
+                <p style="margin:0 0 6px;font-size:12px;color:#38483e;">[ORGANIZATION] &middot; [REGION] &middot; Lead: <strong style="color:#14532d;">[LEAD_PARTNER]</strong></p>
+                <p style="margin:0 0 11px;font-size:12px;color:#38483e;">&#128197; Deadline: <strong style="color:#243b2c;">[DEADLINE]</strong></p>
+                <a href="[OPP_URL]" style="display:inline-block;background:#14532d;color:#ffffff;font-size:12px;
+                          font-weight:700;text-decoration:none;padding:8px 15px;border-radius:4px;">View opportunity &rarr;</a>
+              </td></tr>
+            </table>
+          </td>
+        </tr>
+        <!-- /Opportunity card -->
+
         <!-- Google Drive Link -->
         <tr>
-          <td style="padding:8px 32px 12px;">
+          <td style="padding:16px 32px 12px;">
             <h2 style="margin:0 0 10px;font-size:14px;font-weight:700;color:#14532d;
                         text-transform:uppercase;letter-spacing:.5px;
-                        border-bottom:2px solid #e0e0e0;padding-bottom:6px;">
+                        border-bottom:2px solid #bcd6c3;padding-bottom:6px;">
               View &amp; Download Report
             </h2>
-            <p style="margin:0;padding:14px 18px;background:#eaf5ee;border-left:4px solid #14532d;
+            <p style="margin:0;padding:14px 18px;background:#dcebe0;border-left:4px solid #14532d;
                        border-radius:4px;font-size:13px;color:#14532d;">
               &#128193; Saved to Google Drive:<br><br>
-              <a href="[GOOGLE_DRIVE_LINK]" style="color:#14532d;font-weight:700;word-break:break-all;">[GOOGLE_DRIVE_LINK]</a>
+              <a href="[GOOGLE_DRIVE_LINK]" style="color:#0b3d22;font-weight:700;word-break:break-all;">[GOOGLE_DRIVE_LINK]</a>
             </p>
           </td>
         </tr>
@@ -467,19 +505,19 @@ Send via the **Gmail connector**. **Every email MUST (a) carry the CSV as a dire
         <!-- Attachment Note -->
         <tr>
           <td style="padding:8px 32px 20px;">
-            <p style="margin:0;padding:14px 18px;background:#f0f7ee;border-left:4px solid #2e7d32;
-                       border-radius:4px;font-size:13px;color:#2e7d32;">
-              &#128206; CSV attached: <strong>ESG_OpportunityScout_[YYYY-MM-DD].csv</strong> &mdash; every listing in it has a verified, fetched URL.
+            <p style="margin:0;padding:14px 18px;background:#e3f0e4;border-left:4px solid #1b7a3d;
+                       border-radius:4px;font-size:13px;color:#1b5e2e;">
+              &#128206; CSV attached: <strong style="color:#14532d;">ESG_OpportunityScout_[YYYY-MM-DD].csv</strong> &mdash; every listing in it has a verified, fetched URL.
             </p>
           </td>
         </tr>
 
         <!-- Footer -->
         <tr>
-          <td style="background:#f8f9fa;padding:16px 32px;border-top:1px solid #e0e0e0;">
-            <p style="margin:0;font-size:12px;color:#888;text-align:center;">
+          <td style="background:#0f3d22;padding:16px 32px;">
+            <p style="margin:0;font-size:12px;color:#cce8d4;text-align:center;">
               ESG OpportunityScout &nbsp;|&nbsp; Green &amp; Climate Finance Consortium &nbsp;|&nbsp; This is a weekly automated email &nbsp;|&nbsp;
-              <a href="https://www.afropavoanalytics.com" style="color:#14532d;text-decoration:none;">afropavoanalytics.com</a>
+              <a href="https://www.afropavoanalytics.com" style="color:#9fd3b4;text-decoration:none;">afropavoanalytics.com</a>
             </p>
           </td>
         </tr>
@@ -495,9 +533,9 @@ Send via the **Gmail connector**. **Every email MUST (a) carry the CSV as a dire
 
 ```html
 <tr>
-  <td style="padding:8px 32px 12px;">
-    <p style="margin:0;padding:14px 18px;background:#fff3e0;border-left:4px solid #e65100;
-               border-radius:4px;font-size:13px;color:#e65100;">
+  <td style="padding:16px 32px 12px;">
+    <p style="margin:0;padding:14px 18px;background:#fbe8d2;border-left:4px solid #a85607;
+               border-radius:4px;font-size:13px;color:#8a4404;">
       &#9888; Google Drive upload was not available this run. The full CSV is attached directly to this email.
     </p>
   </td>
