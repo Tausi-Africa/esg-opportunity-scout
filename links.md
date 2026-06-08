@@ -153,6 +153,7 @@
 84. https://www.tendersontime.com/africa-tenders/consultancy-tenders
 85. https://www.africagateway.info/sector/Tenders-Consultancy
 86. https://www.globaltenders.com/africa/af-consultancy-tenders
+87. https://www.gatsbyafrica.org.uk/
 
 #extra-urls
 https://www.ungm.org/Public/Notice
